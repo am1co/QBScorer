@@ -47,6 +47,7 @@ namespace QBScorer
         private ObservableCollection<Config> config_list = new ObservableCollection<Config>(); //stores titles of each config
         public static RoutedCommand SelectConfig = new RoutedCommand();
         public static RoutedCommand CheckQuestion = new RoutedCommand();
+        public string ConfigDirectory;
         public AppInfo appInfo { get; set; }
         //public ScoreboardProperties appInfo.ScoreboardProperties { get; set; }
         public MainWindow()
@@ -55,9 +56,17 @@ namespace QBScorer
             this.appInfo = new AppInfo();
             this.appInfo.ScoreboardProperties = new ScoreboardProperties();
 
+            //this.ConfigDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\SavedConfigs";
+
+            this.ConfigDirectory = "C:\\ProgramData\\QBScorer\\SavedConfigs";
+            Directory.CreateDirectory(this.ConfigDirectory);
+            Debug.WriteLine(this.ConfigDirectory);
+
             this.UpdateConfigFiles();
 
             this.appInfo.ConfigList = this.config_list;
+
+
 
             foreach (Config config in this.appInfo.ConfigList)
             {
@@ -71,8 +80,8 @@ namespace QBScorer
 
             this.DataContext = this.appInfo;
 
-            
-            
+          
+
 
             InitializeComponent();
 
@@ -98,7 +107,7 @@ namespace QBScorer
             {
                 this.config_list = new ObservableCollection<Config>();
                 //int i = 0;
-                foreach (string config_file in Directory.EnumerateFiles(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\SavedConfigs", "*.json"))
+                foreach (string config_file in Directory.EnumerateFiles(this.ConfigDirectory, "*.json"))
                 {
                     
                     string json_config = System.IO.File.ReadAllText(config_file);

@@ -183,7 +183,7 @@ namespace QBScorer
 
             // serialize JSON directly to a file
             string filename = string.Join("_", this.Config.Title.Split(Path.GetInvalidFileNameChars()));
-            using (StreamWriter file = File.CreateText(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\SavedConfigs\\"+ filename+".json"))
+            using (StreamWriter file = File.CreateText(this.MainWindow.ConfigDirectory + "\\" + filename+".json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, this.Config);
