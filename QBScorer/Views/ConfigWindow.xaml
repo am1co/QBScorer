@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QBScorer"
         mc:Ignorable="d"
-        Title="ConfigWindow" Height="600" Width="350">
+        Title="Manage Configuration" Height="600" Width="350">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
