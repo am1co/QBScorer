@@ -33,20 +33,20 @@ namespace QBScorer
         public ConfigWindow(MainWindow mainWindow)
         {
             this.Config = new DynamicConfig();
-            this.Config.Title = "title test";
+            this.Config.Title = "Config Name";
             this.Config.Teams = new ObservableCollection<DynamicTeam>();
             this.Config.Rounds = new ObservableCollection<DynamicRound>();
 
             //add blank team
             DynamicTeam t = new DynamicTeam();
-            t.TeamName = "team name test";
+            t.TeamName = "Team Name";
             t.TeamID = "T01";
             t.Score = "0";
             this.Config.Teams.Add(t);
 
             //add blank round
             DynamicRound r = new DynamicRound();
-            r.RoundName = "round name test";
+            r.RoundName = "Round Name";
             r.Questions = 0;
             r.Points = 0;
             r.RoundID = "R01";

@@ -55,12 +55,9 @@ namespace QBScorer
 
             this.appInfo = new AppInfo();
             this.appInfo.ScoreboardProperties = new ScoreboardProperties();
-
-            //this.ConfigDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\SavedConfigs";
-
             this.ConfigDirectory = "C:\\ProgramData\\QBScorer\\SavedConfigs";
             Directory.CreateDirectory(this.ConfigDirectory);
-            Debug.WriteLine(this.ConfigDirectory);
+            //Debug.WriteLine(this.ConfigDirectory);
 
             this.UpdateConfigFiles();
 
@@ -125,7 +122,7 @@ namespace QBScorer
                     }
                     this.appInfo.ConfigList = this.config_list;
                     //this.SetScoreboardProperties(this.current_config);
-                    Debug.WriteLine(temp_config.Title);
+                    //Debug.WriteLine(temp_config.Title);
                 }
             }
             catch (Exception e)
@@ -159,14 +156,14 @@ namespace QBScorer
         private void ExecutedCheckQuestion(object sender, ExecutedRoutedEventArgs e)
         {
             //need to figure out how to differentiate checked boxes
-            Debug.WriteLine("");
-            Debug.WriteLine("Question Checked.");
+            //Debug.WriteLine("");
+            //Debug.WriteLine("Question Checked.");
             var cmdParam = e.Parameter as CheckboxProperties;
             if (cmdParam != null)
             {
-                Debug.WriteLine("Checked? " + cmdParam.IsChecked);
-                Debug.WriteLine("Team:" + cmdParam.TeamID);
-                Debug.WriteLine("Round:" + cmdParam.RoundName);
+                //Debug.WriteLine("Checked? " + cmdParam.IsChecked);
+                //Debug.WriteLine("Team:" + cmdParam.TeamID);
+                //Debug.WriteLine("Round:" + cmdParam.RoundName);
 
                 foreach (var round in this.appInfo.ScoreboardProperties.Rounds)
                 {
@@ -192,7 +189,7 @@ namespace QBScorer
                                     //this.appInfo.ScoreboardProperties.TeamRows[i].Rounds[cmdParam.rIndex].RoundProperties.Questions[cmdParam.qIndex].CheckboxProperties.IsChecked = true;
                                 }
                                 this.appInfo.ScoreboardProperties.TeamRowSummaries[i].Score = Convert.ToString(score);
-                                Debug.WriteLine("Points: " + this.appInfo.ScoreboardProperties.TeamRowSummaries[i].Score);
+                                //Debug.WriteLine("Points: " + this.appInfo.ScoreboardProperties.TeamRowSummaries[i].Score);
 
                                 break;
                             }
@@ -235,7 +232,7 @@ namespace QBScorer
                     {
                         this.current_config = config;
                         this.SetScoreboardProperties(this.current_config);
-                        Debug.WriteLine ("Number of temas:" + this.appInfo.ScoreboardProperties.TeamRowSummaries.Count);
+                        //Debug.WriteLine ("Number of temas:" + this.appInfo.ScoreboardProperties.TeamRowSummaries.Count);
                         var scoreboardElement = (Grid)this.FindName("Scoreboard");
                         if (scoreboardElement is Grid)
                         {
