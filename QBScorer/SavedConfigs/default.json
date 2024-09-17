@@ -1,0 +1,51 @@
+{
+  "Title": "default",
+  "Teams": [
+    {
+      "TeamID": "T01",
+      "TeamName": "Team #1",
+      "Score": "0000000000000000000000000"
+    },
+    {
+      "TeamID": "T02",
+      "TeamName": "Team #2",
+      "Score": "0000000000000000000000000"
+    },
+    {
+      "TeamID": "T03",
+      "TeamName": "Team #3",
+      "Score": "0000000000000000000000000"
+    },
+    {
+      "TeamID": "T04",
+      "TeamName": "Team #4",
+      "Score": "0000000000000000000000000"
+    },
+    {
+      "TeamID": "T05",
+      "TeamName": "Team #5",
+      "Score": "0000000000000000000000000"
+    }
+  ],
+  "Rounds": [
+    {
+      "RoundName": "Easy",
+      "Questions": 10,
+      "Points": 1,
+      "RoundID": "T01"
+    },
+    {
+      "RoundName": "Average",
+      "Questions": 10,
+      "Points": 2,
+      "RoundID": "T02"
+    },
+    {
+      "RoundName": "Difficult",
+      "Questions": 5,
+      "Points": 3,
+      "RoundID": "T03"
+
+    }
+  ]
+}

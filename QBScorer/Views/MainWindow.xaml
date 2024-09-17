@@ -1,0 +1,161 @@
+﻿<Window x:Class="QBScorer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QBScorer"
+        SizeChanged="OnWindowSizeChanged"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowState="Maximized"
+   
+        >
+
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.SelectConfig}"
+                    Executed="ExecutedSelectConfig"
+                    CanExecute="CanExecuteSelectConfig" />
+        <CommandBinding Command="{x:Static local:MainWindow.CheckQuestion}"
+            Executed="ExecutedCheckQuestion"
+            CanExecute="CanExecuteCheckQuestion" />
+    </Window.CommandBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Edit">
+                <MenuItem Header="_Reset Score" Click="reset_button_Click"/>
+                <MenuItem Header="_Edit Current Config" Click="EditButtonClick"/>
+                <MenuItem Header="_Delete Config" Click="delete_button_Click"/>
+                <MenuItem Header="_Create New Config" Click="NewButtonClick"/>
+                <MenuItem Header="_Save Score" Click="save_button_Click"/>
+
+            </MenuItem>
+
+            <!-- deal with this shit later -->
+            <MenuItem Header="_Open Config" ItemsSource="{Binding ConfigList}">
+
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Command" Value="{x:Static local:MainWindow.SelectConfig}"/>
+                        <Setter Property="CommandParameter" Value="{Binding Title}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"/>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+
+
+            </MenuItem>
+        </Menu>
+
+        <Grid ShowGridLines="False" Name="Scoreboard" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <Border BorderBrush="Black" Padding="0" BorderThickness="1" Height="{Binding RowHeight}">
+                    <Viewbox Margin="10" HorizontalAlignment="Stretch" Height="Auto">
+                        <TextBlock Text="Team Name" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Viewbox>
+                </Border>
+
+                <ItemsControl ItemsSource="{Binding ScoreboardProperties.TeamRowSummaries}">
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" Padding="0" BorderThickness="1" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RowHeight}">
+                                <Viewbox Margin="10" HorizontalAlignment="Stretch" Height="Auto">
+                                    <TextBlock Text="{Binding TeamName}" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Viewbox>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Column="1" CanContentScroll="True">
+                <ItemsControl ItemsSource="{Binding ScoreboardProperties.Rounds}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" BorderThickness="0">
+
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+
+                                <Border BorderBrush="Gray" Padding="0" BorderThickness="1" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RowHeight}">
+                                        <Viewbox Margin="10" VerticalAlignment="Stretch">
+                                            <!--changes font size to fit height of row -->
+                                            <TextBlock Text="{Binding RoundProperties.RoundName}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Viewbox>
+                                </Border>
+
+                                <ItemsControl ItemsSource="{Binding RoundProperties.TeamRows}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <ItemsControl ItemsSource="{Binding Questions}"> 
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RowHeight}"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                            <Border BorderBrush="Gray" BorderThickness="1">
+                                                                <Viewbox Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RowHeight}" MaxWidth="70">
+                                                                    <CheckBox Command="{x:Static local:MainWindow.CheckQuestion}" CommandParameter="{Binding CheckboxProperties}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </Viewbox>
+                                                            </Border>
+                                                        </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+ 
+            </ScrollViewer>
+
+            <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Top">
+                <Border BorderBrush="Black" Padding="0" BorderThickness="1" Height="{Binding RowHeight}">
+                    <Viewbox Margin="10" HorizontalAlignment="Stretch" Height="Auto">
+                        <TextBlock Text="Score" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Viewbox>
+                </Border>
+                <ItemsControl ItemsSource="{Binding ScoreboardProperties.TeamRowSummaries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Black" Padding="0" BorderThickness="1" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RowHeight}">
+                                <Viewbox Margin="10" HorizontalAlignment="Stretch" Height="Auto">
+                                    <TextBlock Text="{Binding Score}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Viewbox>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+        </Grid>
+        
+        
+    </DockPanel>
+    
+</Window>
