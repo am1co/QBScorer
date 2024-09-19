@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System;
 using System.Globalization;
+using System.Windows.Controls.Primitives;
 
 namespace QBScorer
 {
@@ -81,6 +82,7 @@ namespace QBScorer
 
 
             InitializeComponent();
+            this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
             var scoreboardElement = (Grid)this.FindName("Scoreboard");
             if (scoreboardElement is Grid)
@@ -98,6 +100,28 @@ namespace QBScorer
             //Debug.WriteLine("Testing");
 
         }
+        void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.WindowStyle == WindowStyle.None)
+            {
+                if (e.Key == Key.Escape)
+                {
+                    // Exit fullscreen
+                    this.ResizeMode = ResizeMode.CanResize;
+                    this.WindowStyle = WindowStyle.SingleBorderWindow;
+                    //this.WindowState = WindowState.Normal;
+                    var MenuBar = (Menu)this.FindName("MenuBar");
+                    if (MenuBar is Menu)
+                    {
+                        MenuBar.Visibility = Visibility.Visible;
+                    }
+
+                }
+
+            }
+            
+        }
+
         public void UpdateConfigFiles()
         {
             try
@@ -351,6 +375,37 @@ namespace QBScorer
             ConfigWindow configWindow = new ConfigWindow(this, this.current_config);
             configWindow.Owner = this;
             configWindow.Show();
+        }
+
+        private void FullScreenButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowStyle == WindowStyle.None)
+            {
+                // Exit fullscreen
+                this.ResizeMode = ResizeMode.CanResize;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                //this.WindowState = WindowState.Normal;
+                var MenuBar = (Menu)this.FindName("MenuBar");
+                if (MenuBar is Menu)
+                {
+                    MenuBar.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                // Enter fullscreen
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Normal;
+                this.WindowState = WindowState.Maximized;
+
+                var MenuBar = (Menu)this.FindName("MenuBar");
+                if (MenuBar is Menu)
+                {
+                    MenuBar.Visibility = Visibility.Collapsed;
+                }
+
+            }
         }
 
         private void reset_button_Click(object sender, RoutedEventArgs e)

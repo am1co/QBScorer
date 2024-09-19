@@ -20,7 +20,10 @@
             CanExecute="CanExecuteCheckQuestion" />
     </Window.CommandBindings>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Name="MenuBar"> <!--make this go away on full screen -->
+            <MenuItem Header="View">
+                <MenuItem Header="Toggle Full Screen" Click="FullScreenButtonClick"/>
+            </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="_Reset Score" Click="reset_button_Click"/>
                 <MenuItem Header="_Edit Current Config" Click="EditButtonClick"/>
